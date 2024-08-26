@@ -16,20 +16,21 @@ Github är en tjänst för att lagra och dela kod. Du kommer att använda github
   * Valfritt lösenord
   * Använd din skolmail
 
-## Installera git och Dotnet 7
-För att kunna använda Visual Studio Code för att skapa C#-projekt behöver du installera **git** och **Dotnet 7**.
+## Installera git och Dotnet 8
+För att kunna använda Visual Studio Code för att skapa C#-projekt behöver du installera **git** och **Dotnet 8**.
 
 > Öppna **Windows Powershell** och *skriv/kör* följande kommandon:
 
 ```Powershell
+winget install Microsoft.VisualStudioCode
 winget install git.git
-winget install Microsoft.DotNet.SDK.7
+winget install Microsoft.DotNet.SDK.8
 ```
 
 Eller gå till följande webbsidor och ladda ner och installera följande mjukvaror:
 
 1. [git](https://git-scm.com/downloads)
-2. [Dotnet 7](https://dotnet.microsoft.com/en-us/download/dotnet/thank-you/sdk-7.0.400-windows-x64-installer)
+2. [Dotnet](https://dotnet.microsoft.com)
 
 ## Installera tillägg i VS Code
 Med tillägg i VS Code förenklas arbetet med att skapa och underhålla projekt.  
