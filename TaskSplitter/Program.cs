@@ -101,7 +101,30 @@ public class Program
 
     private static void RandomizeTasks(Data data)
     {
-        throw new NotImplementedException();
+        // Shallow kopia listan av strings så att det kan återanvändas senare
+        List<string> copyOfPeople = [..data.People];
+
+        // Itererar genom alla uppgifter
+        foreach (string dataTask in data.Tasks)
+        {
+            // Om kopian är tom sluta loopa
+            if (copyOfPeople.Count <= 0)
+            {
+                break;
+            }
+
+            // Skaffa en slumpmäsig position i listan
+            int randomIndex = Random.Shared.Next(0, copyOfPeople.Count);
+            // Printa ut vad den slumpmäsiga personen ska göra
+            Console.WriteLine($"{copyOfPeople[randomIndex]} ska {dataTask}");
+            // Ta bort personen från listan
+            copyOfPeople.RemoveAt(randomIndex);
+        }
+
+        Console.Write("Tryck enter för att fortsätta: ");
+        // Väntar på att användaren ska trycka enter för att fortsätta
+        Console.ReadLine();
+        Console.Clear();
     }
 
     private static void LoadPeople(Data data)
