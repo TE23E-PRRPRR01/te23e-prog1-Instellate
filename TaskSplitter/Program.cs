@@ -234,7 +234,41 @@ public class Program
 
     private static void LoadPeople(Data data)
     {
-        throw new NotImplementedException();
+        // Initierar variable där all text kommer vara
+        string text;
+        try
+        {
+            // Läs all text från fil `./tasks.json`
+            text = File.ReadAllText("./tasks.json");
+        }
+        catch (FileNotFoundException)
+        {
+            // Printa att användaren har ingen sparad data om filen inte blir hittad och gå tillbaka
+            Console.WriteLine("Du har ingen sparad data");
+            return;
+        }
+
+        try
+        {
+            // Läs data från `text` variable
+            Data? newData = JsonSerializer.Deserialize<Data>(text);
+            if (newData is null)
+            {
+                // Om data är null så är content i filen dålig
+                Console.WriteLine("Datan i filen är dålig! Spara om");
+            }
+            else
+            {
+                // Annars lada in enbart person data
+                data.People = newData.People;
+                Console.WriteLine("Laddade in personer!");
+            }
+        }
+        catch (JsonException)
+        {
+            // Datan är inte JSON, eller JSON som inte kan läsas in till `Data` 
+            Console.WriteLine("Datan i filen är dålig! Spara om");
+        }
     }
 
     private static void AddOrEdit(List<string> data, string typeName)
