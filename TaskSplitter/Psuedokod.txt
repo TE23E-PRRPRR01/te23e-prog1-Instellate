@@ -1,0 +1,70 @@
+﻿Task splitter psuedokod:
+* Introducera användaren till programmet
+* Initiera en loop som pågår för evigt
+  * Meny: Printa en meny för olika åtgärden
+  * Läs användarens input
+  * Gör om det till ett nummer. Om det är ogiltigt, säg till användaren och gå till 'Meny'
+  * Välj olika åtgärden beroende på vilket nummer. Om det är ett nummer som inte är registrerat, säg det och gå till 'Meny'
+
+  Nummer 1 (Lägg, visa eller redigera personer):
+    * Kalla metod för visa och redigra lista och ge person lista
+
+  Nummer 2 (Lägg, visa eller redigera uppgifter):
+    * Kalla metod för visa och redigra lista och ge uppgift lista
+
+  Nummer 3 (Ladda in sparade uppgifter):
+    * Titta om filen './tasks.json'
+    * Om det inte finns, säg det och gå till 'Meny'
+    * Om det finns, ladda in filen och byt ut uppgift listan med data från './tasks.json'
+
+  Nummer 4 (Ladda in sparade personer):
+    * Titta om filen './tasks.json'
+    * Om det inte finns, säg det och gå till 'Meny'
+    * Om det finns, ladda in filen och byt ut person listan med data från './tasks.json'
+
+  Nummer 5 (Spara data):
+    * Starta en loop
+      * Printa en meny för olika åtgärden användaren kan göra
+      * Gör olika åtgärden beroende på vilket nummer
+      Nummer 1 (spara personer):
+        * Gör om person lista till JSON
+        * Skriv det till './tasks.json'
+      Nummer 2 (spara uppgifter):
+        * Gör om uppgift lista till JSON
+        * Skriv det till './tasks.json'
+      Nummer 3 (spara båda):
+        * Gör om uppgift och person listan till JSON
+        * Skriv det till './tasks.json'
+      Nummer 4 (lämna):
+        * Lämna loop
+
+  Nummer 6 (Slumpa):
+    * Gör en kopia av person listan
+    * Loopa igenom uppgift listan
+      * Ta en slumpmäsig person ur kopian av person listan
+      * Ta bort den personen från kopian av person listan
+      * Printa att person tar hand om uppgift
+    * Gå till 'Meny' 
+  Nummer 7 (Lämna):
+    * Stäng loopen
+    * Stäng av programmet
+
+Metod för att visa och redigera lista:
+  * Starta en loop för olika åtgärden
+  * List meny: Visa för användaren hur man lägger till och redigerar användaren och printa alla användare
+  * Läs input från användare
+  * Om input är 'a' gör:
+    * Fråga användaren om ett namn
+    * Läs användarens input
+    * Lägg till användarens input som en ny punkt
+  * Annars om input är 'q':
+    * Gå tillbaka till 'Meny'
+  * Annars
+    * Konvertera till ett nummer
+    * Om det är ett ogiltigt nummer, säg det och gå till 'List meny'
+    * Titta om numret är utanför listan av personer.
+    * Om numret är utanför listans namn, säg det och gå till 'List meny'
+    * Fråga användaren om ett nytt namn
+    * Läs användarens input
+    * Byt namn på personen given till det nya namnet
+  * Gå tillbaka till 'Person lista'
