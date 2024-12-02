@@ -1,4 +1,6 @@
-﻿namespace TaskSplitter;
+﻿using System.Text.Json;
+
+namespace TaskSplitter;
 
 public class Program
 {
@@ -96,7 +98,76 @@ public class Program
 
     private static void SaveData(Data data)
     {
-        throw new NotImplementedException();
+                // Loopa tills vi säger annars
+        while (true)
+        {
+            // Visa en lista över alternativ till användaren
+            Console.Write("""
+                          Vad vill du spara?
+                          1. Spara personer
+                          2. Spara uppgifter
+                          3. Spara båda
+                          4. Gå tillbaka
+                          Input:
+                          """);
+
+            // Ta input från användaren
+            string? input = Console.ReadLine();
+
+            // Titta om input är ett valid nummer
+            if (!int.TryParse(input, out int number))
+            {
+                // Om det är inte ett nummer skriv det och loopa tillbaka till menyn
+                Console.Clear();
+                Console.WriteLine("Du måste ge mig ett nummer");
+                continue;
+            }
+
+            // Variabel som används för att hålla json data
+            string json;
+            switch (number)
+            {
+                // Spara alla personer
+                case 1:
+                    // Gör om data om personer från ett objekt till json
+                    json = JsonSerializer.Serialize(new Data()
+                    {
+                        Tasks = data.People
+                    });
+                    // Skriv det till tasks.json
+                    File.WriteAllText("./tasks.json", json);
+                    Console.Clear();
+                    Console.WriteLine("Sparade personer");
+                    break;
+                case 2:
+                    // Gör om data om uppgifter från ett objekt till json
+                    json = JsonSerializer.Serialize(new Data()
+                    {
+                        Tasks = data.Tasks
+                    });
+                    // Skriv det till tasks.json
+                    File.WriteAllText("./tasks.json", json);
+                    Console.Clear();
+                    Console.WriteLine("Sparade uppgifter");
+                    break;
+                case 3:
+                    // Gör om både personer och uppgifter från ett objekt till json
+                    json = JsonSerializer.Serialize(data);
+                    File.WriteAllText("./tasks.json", json);
+                    Console.Clear();
+                    Console.WriteLine("Sparade allting");
+                    break;
+                case 4:
+                    // Lämna loopen
+                    Console.Clear();
+                    return;
+                default:
+                    // Användaren gav ett nummer som inte är i listan. Loopa om
+                    Console.Clear();
+                    Console.WriteLine("Känner inte igen det numret. Ta en från listan");
+                    break;
+            }
+        }
     }
 
     private static void RandomizeTasks(Data data)
