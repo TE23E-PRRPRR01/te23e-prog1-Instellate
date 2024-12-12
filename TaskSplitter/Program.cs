@@ -21,7 +21,7 @@ public static class Program
                               Alternativ:
                               1. Lägg, visa eller redigera personer
                               2. Lägg, visa eller redigera uppgifter
-                              3. Visa eller checka av tilldelade uppgifter
+                              3. Visa, checka av eller tilldela uppgifter
                               4. Ladda in all sparad data
                               5. Spara all data
                               6. Slumpa!
@@ -275,6 +275,7 @@ public static class Program
         {
             // Ge instruktioner över hur det använts
             Console.WriteLine("Skriv in numret för en tilldelad uppgift för att checka av den");
+            Console.WriteLine("Skriv 'a' om du vill själv tilldela en uppgift");
             Console.WriteLine("Skriv 'q' om du vill lämna");
             for (int i = 0; i < manager.Assignments.Count; i++)
             {
@@ -323,6 +324,30 @@ public static class Program
                 Console.Clear();
                 return;
             }
+            else if (input == "a")
+            {
+                Console.Clear();
+                // Ta en person från listan
+                string? person = ChooseFromList(manager.People, "person");
+                // Om det är null så är operationen för att välja en person avbryten, gå tillbaka till menyn
+                if (person is null)
+                {
+                    continue;
+                }
+
+                Console.Clear();
+                // Om det är null så är operationen för att välja en uppgift avbryten, gå tillbaka till menyn
+                string? task = ChooseFromList(manager.Tasks, "uppgift");
+                if (task is null)
+                {
+                    continue;
+                }
+
+                // Lägg till personen och uppgiften till tilldelade uppgiften
+                manager.AddAssignment(person, task);
+                Console.Clear();
+                Console.WriteLine("Tilldelade uppgiften");
+            }
             else
             {
                 // Input existerar inte
@@ -330,5 +355,45 @@ public static class Program
                 Console.WriteLine($"Jag vet inte om {input}");
             }
         }
+    }
+
+    private static string? ChooseFromList(IReadOnlyList<string> list, string typeName)
+    {
+        Console.WriteLine($"Välj en {typeName}");
+        for (int i = 0; i < list.Count; i++)
+        {
+            Console.WriteLine($"{i + 1}. {list[i]}");
+        }
+
+        Console.Write("Input: ");
+        string? input = Console.ReadLine();
+        if (input is null)
+        {
+            Console.Clear();
+            Console.WriteLine("Input finns inte, avbryter");
+            return null;
+        }
+
+        if (!int.TryParse(input, out int num))
+        {
+            Console.Clear();
+            Console.WriteLine("Input är inte ett nummer, avbryter");
+            return null;
+        }
+
+        if (num <= 0)
+        {
+            Console.Clear();
+            Console.WriteLine("Input är mindre än 0, avbryter");
+            return null;
+        }
+
+        if (num > list.Count)
+        {
+            Console.Clear();
+            Console.WriteLine("Input är större än vad som är tillgängligt, avbryter");
+        }
+
+        return list[num - 1];
     }
 }

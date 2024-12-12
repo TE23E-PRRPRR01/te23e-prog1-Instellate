@@ -31,6 +31,50 @@ public class DataManager
     // Lägger till en ny uppgift
     public void AddTasks(string task) => _tasks.Add(task);
 
+    // Lägger till en ny tilldelad uppgift
+    public void AddAssignment(Assignment assignment)
+    {
+        // Titta om personen existerar
+        bool containsPerson = false;
+        foreach (var s in this.People)
+        {
+            if (string.Equals(s, assignment.Person))
+            {
+                containsPerson = true;
+                break;
+            }
+        }
+
+        // Om personen inte existerar kasta ett exception
+        if (!containsPerson)
+        {
+            throw new InvalidOperationException("Person does not exist");
+        }
+
+        // Titta om uppgiften existerar
+        bool containsTasks = false;
+        foreach (var task in this.Tasks)
+        {
+            if (string.Equals(task, assignment.Task))
+            {
+                containsTasks = true;
+                break;
+            }
+        }
+
+        // Om uppgiften inte existerar kasta ett exception
+        if (!containsTasks)
+        {
+            throw new InvalidOperationException("Task does not exist");
+        }
+
+        // Lägg till den nya tilldelade uppgiften
+        this._assignments.Add(assignment);
+    }
+
+    // Overload för att bara lägga till genom att ge bara namn och uppgift
+    public void AddAssignment(string person, string task) => AddAssignment(new Assignment(person, task));
+
     // Tar bort en person
     public void RemovePerson(string name)
     {
