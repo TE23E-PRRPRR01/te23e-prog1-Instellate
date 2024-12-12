@@ -3,13 +3,11 @@ using System.Text.Json.Serialization;
 
 namespace TaskSplitter;
 
+[JsonConverter(typeof(DataManagerConverter))]
 public class DataManager
 {
-    [JsonIgnore]
     private readonly List<string> _people = [];
-    [JsonIgnore]
     private readonly List<string> _tasks = [];
-    [JsonIgnore]
     private readonly List<Assignment> _assignments = [];
 
     public IReadOnlyList<string> People => _people;
@@ -20,7 +18,6 @@ public class DataManager
     {
     }
 
-    [JsonConstructor]
     public DataManager(List<string>? people, List<string>? tasks, List<Assignment>? assignments)
     {
         _people = people ?? [];
@@ -30,7 +27,7 @@ public class DataManager
 
     // Lägger till en ny person
     public void AddPerson(string name) => _people.Add(name);
-    
+
     // Lägger till en ny uppgift
     public void AddTasks(string task) => _tasks.Add(task);
 
@@ -59,7 +56,7 @@ public class DataManager
         // Ta bort personen
         _people.Remove(name);
     }
-    
+
     // Tar bort en uppgift
     public void RemoveTask(string name)
     {
@@ -90,10 +87,14 @@ public class DataManager
     public void RemoveAssignment(Assignment assignment) => _assignments.Remove(assignment);
 
     // Tar bort en tilldelade uppgift(er) genom personens namn
-    public void RemoveAssignmentByPerson(string name) => _assignments.RemoveAll(a => a.Person == name);
+    public void RemoveAssignmentsByPerson(string name) => _assignments.RemoveAll(a => a.Person == name);
 
     // Tar bort en tilldelade uppgift(er) genom uppgiftens namn
-    public void RemoveAssignmentByTask(string name) => _assignments.RemoveAll(a => a.Task == name);
+    public void RemoveAssignmentsByTask(string name) => _assignments.RemoveAll(a => a.Task == name);
+
+    public void EditPerson(string oldName, string newName) => _people[_people.IndexOf(oldName)] = newName;
+
+    public void EditTask(string oldName, string newName) => _tasks[_tasks.IndexOf(oldName)] = newName;
 
     // Tilldela uppgifter till personen
     public void Assign()

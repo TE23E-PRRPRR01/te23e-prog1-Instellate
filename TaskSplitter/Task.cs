@@ -4,8 +4,8 @@ public enum Task
 {
     People,
     Tasks,
-    LoadPeople,
-    LoadTasks,
+    Assignments,
+    LoadData,
     SaveData,
     Randomize,
     Quit
