@@ -4,7 +4,11 @@ namespace TaskSplitter;
 
 public static class Program
 {
-    public static int Main(string[] args)
+    /// <summary>
+    /// Ingångspunkt för programmet
+    /// </summary>
+    /// <returns></returns>
+    public static int Main()
     {
         Console.Clear();
         Console.WriteLine("Välkommen! Ska vi ordna vem som gör vilken uppgift nu då?");
@@ -98,6 +102,10 @@ public static class Program
         }
     }
 
+    /// <summary>
+    /// Laddar in JSON data från filen `./tasks.json`
+    /// </summary>
+    /// <returns>En <see cref="DataManager"/> med `./tasks.json` inladdad</returns>
     private static DataManager? LoadData()
     {
         // Tittar om filen för sparad data finns
@@ -132,6 +140,10 @@ public static class Program
         return null;
     }
 
+    /// <summary>
+    /// Sparar data från <see cref="DataManager"/> till `./tasks.json
+    /// </summary>
+    /// <param name="manager">Datan som ska bli sparad</param>
     private static void SaveData(DataManager manager)
     {
         // Kalla `SaveDatà` för att spara data
@@ -174,6 +186,11 @@ public static class Program
         Console.Clear();
     }
 
+    /// <summary>
+    /// Funktion för att låta användaren lägga till, ta bort eller redigera olika data från <see cref="DataManager"/>
+    /// </summary>
+    /// <param name="manager">Datan som ska användas</param>
+    /// <param name="typeName">Typen som ska blir redigerad, antingen `Person` eller `Uppgift`</param>
     private static void AddOrEdit(DataManager manager, string typeName)
     {
         // Data är för data, typeName är för att printa vilken typ av sak som används
@@ -269,6 +286,10 @@ public static class Program
         }
     }
 
+    /// <summary>
+    /// En funktion för att hantera uppgifter
+    /// </summary>
+    /// <param name="manager">Datan för uppgifterna som ska användas</param>
     private static void ManageAssignments(DataManager manager)
     {
         while (true)
@@ -357,6 +378,12 @@ public static class Program
         }
     }
 
+    /// <summary>
+    /// En funktion som läter dig välja en string från en lista
+    /// </summary>
+    /// <param name="list">Listan som ska användas</param>
+    /// <param name="typeName">Vad för typ som listan ska användas</param>
+    /// <returns></returns>
     private static string? ChooseFromList(IReadOnlyList<string> list, string typeName)
     {
         Console.WriteLine($"Välj en {typeName}");

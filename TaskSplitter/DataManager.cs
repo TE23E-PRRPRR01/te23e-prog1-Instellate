@@ -25,13 +25,23 @@ public class DataManager
         _assignments = assignments ?? [];
     }
 
-    // Lägger till en ny person
+    /// <summary>
+    /// Lägger till en ny person
+    /// </summary>
+    /// <param name="name">Personens namn</param>
     public void AddPerson(string name) => _people.Add(name);
 
-    // Lägger till en ny uppgift
+    /// <summary>
+    /// Lägger till en ny uppgift
+    /// </summary>
+    /// <param name="task"></param>
     public void AddTasks(string task) => _tasks.Add(task);
 
-    // Lägger till en ny tilldelad uppgift
+    /// <summary>
+    /// Lägger till en ny tilldelad uppgift
+    /// </summary>
+    /// <param name="assignment">Tilldelning som ska användas</param>
+    /// <exception cref="InvalidOperationException">Om personen eller uppgiften så slängs detta</exception>
     public void AddAssignment(Assignment assignment)
     {
         // Titta om personen existerar
@@ -72,10 +82,18 @@ public class DataManager
         this._assignments.Add(assignment);
     }
 
-    // Overload för att bara lägga till genom att ge bara namn och uppgift
+    /// <summary>
+    /// Overload för att bara lägga till genom att ge bara namn och uppgift
+    /// </summary>
+    /// <param name="person">Personens namn</param>
+    /// <param name="task">Uppgiftens namn</param>
     public void AddAssignment(string person, string task) => AddAssignment(new Assignment(person, task));
 
-    // Tar bort en person
+    /// <summary>
+    /// Tar bort en person
+    /// </summary>
+    /// <param name="name">Namn på personen</param>
+    /// <exception cref="InvalidOperationException">Om personen har en tilldelning så slängs detta</exception>
     public void RemovePerson(string name)
     {
         bool contains = false;
@@ -101,7 +119,11 @@ public class DataManager
         _people.Remove(name);
     }
 
-    // Tar bort en uppgift
+    /// <summary>
+    /// Tar bort en uppgift
+    /// </summary>
+    /// <param name="name">Uppgiftens namn</param>
+    /// <exception cref="InvalidOperationException">Om uppgiften har en tilldelning så slängs detta</exception>
     public void RemoveTask(string name)
     {
         // Tittar om uppgiftens namn är i tilldelade uppgifter
@@ -127,20 +149,41 @@ public class DataManager
         _tasks.Remove(name);
     }
 
-    // Tar bort en tilldelad uppgift
+    /// <summary>
+    /// Tar bort en tilldelad uppgift
+    /// </summary>
+    /// <param name="assignment">Tilldelningens objekt</param>
     public void RemoveAssignment(Assignment assignment) => _assignments.Remove(assignment);
 
-    // Tar bort en tilldelade uppgift(er) genom personens namn
+    /// <summary>
+    /// Tar bort en tilldelade uppgift(er) genom personens namn
+    /// </summary>
+    /// <param name="name">Personens namn</param>
     public void RemoveAssignmentsByPerson(string name) => _assignments.RemoveAll(a => a.Person == name);
 
-    // Tar bort en tilldelade uppgift(er) genom uppgiftens namn
+    /// <summary>
+    /// Tar bort en tilldelade uppgift(er) genom uppgiftens namn
+    /// </summary>
+    /// <param name="name"></param>
     public void RemoveAssignmentsByTask(string name) => _assignments.RemoveAll(a => a.Task == name);
 
+    /// <summary>
+    /// Redigera en persons namn
+    /// </summary>
+    /// <param name="oldName">Gamla namn</param>
+    /// <param name="newName">Nya namn</param>
     public void EditPerson(string oldName, string newName) => _people[_people.IndexOf(oldName)] = newName;
 
+    /// <summary>
+    /// Redigera en uppgfts namn
+    /// </summary>
+    /// <param name="oldName">Gamla namn</param>
+    /// <param name="newName">Nya namn</param>
     public void EditTask(string oldName, string newName) => _tasks[_tasks.IndexOf(oldName)] = newName;
 
-    // Tilldela uppgifter till personen
+    /// <summary>
+    /// Tilldela uppgfter till personer
+    /// </summary>
     public void Assign()
     {
         // Töm tilldelade uppgifter
@@ -168,7 +211,9 @@ public class DataManager
         }
     }
 
-    // Spara all data
+    /// <summary>
+    /// Spara all data till `./tasks.json`
+    /// </summary>
     public void SaveData()
     {
         // Gör om datan till json
